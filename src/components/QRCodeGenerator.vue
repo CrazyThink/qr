@@ -1,7 +1,7 @@
 <template>
   <div class="qr-generator-layout">
     <el-space direction="vertical" fill>
-      <canvas ref="canvas" />
+      <canvas ref="canvas" style="width:200px; height:200px;" />
       <el-button type="primary" @click="downloadQRImage" :icon="Download">다운로드</el-button>
       <el-button type="warning" @click="goToBuyMeACoffee" :icon="Coffee">
         개발자에게 커피 사주기
@@ -73,8 +73,8 @@ const dotStyle = ref('square');
 const canvas = ref<HTMLCanvasElement | null>(null);
 const previewSquare = ref<HTMLCanvasElement | null>(null);
 const previewCircle = ref<HTMLCanvasElement | null>(null);
-const CANVAS_SIZE = 200;
-const QR_MARGIN = 30; // QR 코드와 캔버스 가장자리 여백(px)
+const CANVAS_SIZE = 1600;
+const QR_MARGIN = 240;
 const uploadedImg = ref<HTMLImageElement | null>(null);
 
 const presetColors = [
@@ -202,7 +202,7 @@ function drawPreviewCanvas(previewCanvas: HTMLCanvasElement, style: string) {
           style,
           x,
           y,
-          style === 'square' ? cellSize : cellSize * 0.8,
+          cellSize,
           '#000000'
         );
       }
@@ -250,7 +250,7 @@ const generateQRCode = async () => {
               dotStyle.value,
               QR_MARGIN + c * cellSize + cellSize / 2,
               QR_MARGIN + r * cellSize + cellSize / 2,
-              dotStyle.value === 'square' ? cellSize : cellSize * 0.8,
+              cellSize,
               solidColor
           );
         }
@@ -265,7 +265,7 @@ const generateQRCode = async () => {
               dotStyle.value,
               QR_MARGIN + c * cellSize + cellSize / 2,
               QR_MARGIN + r * cellSize + cellSize / 2,
-              dotStyle.value === 'square' ? cellSize : cellSize * 0.8,
+              cellSize,
               solidColor,
               uploadedImg.value,
               cellSize
